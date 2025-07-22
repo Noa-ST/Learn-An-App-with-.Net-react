@@ -13,10 +13,21 @@ export default function ActivityList({
   deleteActivity,
 }: Props) {
   return (
-    <Grid container spacing={3} alignItems="stretch">
+    <Grid container spacing={2}>
       {activities.map((activity) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={activity.id}>
-          <Box display="flex" flexDirection="column" height="100%">
+        <Grid item xs={12} sm={6} md={6} lg={6} key={activity.id}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            height="400px" // Chiều cao cố định
+            sx={{
+              justifyContent: "space-between",
+              borderRadius: 2,
+              boxShadow: 2,
+              bgcolor: "background.paper",
+              p: 2,
+            }}
+          >
             <ActivityCard
               activity={activity}
               selectActivity={selectActivity}
@@ -26,15 +37,5 @@ export default function ActivityList({
         </Grid>
       ))}
     </Grid>
-
-    // <Box sx={{ display: "flex", flexDirection: "colum", gap: 3 }}>
-    //   {activities.map((activity) => (
-    //     <ActivityCard
-    //       key={activity.id}
-    //       activity={activity}
-    //       selectActivity={selectActivity}
-    //     />
-    //   ))}
-    // </Box>
   );
 }
