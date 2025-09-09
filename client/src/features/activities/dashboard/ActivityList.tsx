@@ -4,14 +4,9 @@ import ActivityCard from "./ActivityCard";
 type Props = {
   activities: Activity[];
   selectActivity: (id: string) => void;
-  deleteActivity: (id: string) => void;
 };
 
-export default function ActivityList({
-  activities,
-  selectActivity,
-  deleteActivity,
-}: Props) {
+export default function ActivityList({ activities, selectActivity }: Props) {
   return (
     <Grid container spacing={2}>
       {activities.map((activity) => (
@@ -28,11 +23,7 @@ export default function ActivityList({
               p: 2,
             }}
           >
-            <ActivityCard
-              activity={activity}
-              selectActivity={selectActivity}
-              deleteActivity={deleteActivity}
-            />
+            <ActivityCard activity={activity} selectActivity={selectActivity} />
           </Box>
         </Grid>
       ))}

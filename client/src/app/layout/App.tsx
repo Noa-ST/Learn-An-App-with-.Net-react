@@ -2,14 +2,24 @@ import { useState } from "react";
 import { Box, Container, CssBaseline, Typography } from "@mui/material";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-import { useActivities } from "../../lib/hooks/useActivities";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 function App() {
   const [selectedActivity, setSelectedActivity] = useState<
     Activity | undefined
   >(undefined);
   const [editMode, setEditMode] = useState(false);
-  const { activities, isPending } = useActivities();
+
+  const { data: activities, isPending } = useQuery({
+    queryKey: ["activities"],
+    queryFn: async () => {
+      const response = await axios.get<Activity[]>(
+        "https://localhost:7046/api/activities"
+      );
+      return response.data;
+    },
+  });
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities!.find((x) => x.id === id));
@@ -28,11 +38,6 @@ function App() {
     setEditMode(false);
   };
 
-  const handleDelete = (id: string) => {
-    // setActivities(activities.filter((x) => x.id !== id));
-    console.log(id);
-  };
-
   return (
     <Box sx={{ bgcolor: "#eeeeee", minHeigh: "100vh" }}>
       <CssBaseline />
@@ -49,7 +54,6 @@ function App() {
             editMode={editMode}
             openForm={handleOpenForm}
             closeForm={handleFormClose}
-            deleteActivity={handleDelete}
           />
         )}
       </Container>
