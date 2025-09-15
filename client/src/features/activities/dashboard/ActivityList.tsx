@@ -1,12 +1,11 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import ActivityCard from "./ActivityCard";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
-type Props = {
-  activities: Activity[];
-  selectActivity: (id: string) => void;
-};
+export default function ActivityList() {
+  const { activities, isPending } = useActivities();
 
-export default function ActivityList({ activities, selectActivity }: Props) {
+  if (!activities || isPending) return <Typography>Loading...</Typography>;
   return (
     <Grid container spacing={2}>
       {activities.map((activity) => (
@@ -14,7 +13,7 @@ export default function ActivityList({ activities, selectActivity }: Props) {
           <Box
             display="flex"
             flexDirection="column"
-            height="400px" // Chiều cao cố định
+            height="400px"
             sx={{
               justifyContent: "space-between",
               borderRadius: 2,
@@ -23,7 +22,7 @@ export default function ActivityList({ activities, selectActivity }: Props) {
               p: 2,
             }}
           >
-            <ActivityCard activity={activity} selectActivity={selectActivity} />
+            <ActivityCard activity={activity} />
           </Box>
         </Grid>
       ))}
