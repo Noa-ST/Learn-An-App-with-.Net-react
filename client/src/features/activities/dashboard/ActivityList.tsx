@@ -7,19 +7,19 @@ export default function ActivityList() {
 
   if (!activities || isPending) return <Typography>Loading...</Typography>;
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       {activities.map((activity) => (
-        <Grid item xs={12} sm={6} md={6} lg={6} key={activity.id}>
+        <Grid item xs={12} key={activity.id}>
           <Box
             display="flex"
             flexDirection="column"
-            height="400px"
             sx={{
-              justifyContent: "space-between",
-              borderRadius: 2,
-              boxShadow: 2,
+              borderRadius: 3,
+              boxShadow: 3,
               bgcolor: "background.paper",
               p: 2,
+              minHeight: 180,
+              height: "100%",
             }}
           >
             <ActivityCard activity={activity} />
