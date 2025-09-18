@@ -1,8 +1,9 @@
 import axios from "axios";
+import { store } from "../stores/store";
 
 const sleep = (delay: number) => {
-  return new Promise((reslolve) => {
-    setTimeout(reslolve, delay);
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
   });
 };
 
@@ -10,14 +11,21 @@ const agent = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-agent.interceptors.response.use(async (respone) => {
-  try {
+agent.interceptors.request.use((config) => {
+  store.uiStore.isBusy();
+  return config;
+});
+
+agent.interceptors.response.use(
+  async (response) => {
     await sleep(1000);
-    return respone;
-  } catch (error) {
-    console.log(error);
+    store.uiStore.isIdle();
+    return response;
+  },
+  (error) => {
+    store.uiStore.isIdle();
     return Promise.reject(error);
   }
-});
+);
 
 export default agent;
