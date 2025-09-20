@@ -19,11 +19,11 @@ namespace Application.Activities.Commands
         {
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await context.Activities.FindAsync([request.activityDto.Id], cancellationToken);
+                var activity = await context.Activities.FindAsync([request.ActivityDto.Id], cancellationToken);
 
                 if (activity == null) return Result<Unit>.Failure("Activity not found", 404);
 
-                mapper.Map(request.activityDto, activity);
+                mapper.Map(request.ActivityDto, activity);
 
                 var result = await context.SaveChangesAsync(cancellationToken) > 0;
 
